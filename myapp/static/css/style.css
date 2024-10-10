@@ -1,0 +1,44 @@
+.titre1 {
+    color: rgb(105, 10, 149);
+    font-size: 30px;
+    text-align: center;
+}
+.tab {
+    width: 400px;
+    border: solid 1px #056b6b;
+    margin: auto;
+} 
+.btnNumber{
+    width: 50px;
+    height: 50px;
+    background-color: aquamarine;
+    font-size: 18px;
+
+}
+.btnOp{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(90, 3, 84);
+    color: beige;
+    
+}
+.btnOpEgal{
+    width: 100px;
+    height: 50px;
+    background-color: rgb(90, 3, 84);
+    color: beige;
+    
+}
+.btnFn{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(2, 78, 26);
+    color: beige;
+    
+}
+.result {
+   background-color: black; 
+   color: rgb(177, 212, 5);
+   font-size: 18px;
+   height: 60px;
+}

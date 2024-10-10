@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    
+    <title>create item</title>
+</head>
+<body>
+    <div class="container">
+        
+       
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+                <p>Êtes-vous sûr de vouloir supprimer l'élément : {{ item.name }} ?</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-danger" type="submit">Supprimer</button>
+                    <a href="{% url 'index' %}" class="btn btn-outline-dark">Annuler</a>   
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

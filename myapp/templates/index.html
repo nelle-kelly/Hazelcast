@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <form class="container-fluid justify-content-start">
+            <a href="{% url 'calculator' %}" class="btn btn-outline-dark me-2">calculatrice</a>
+            <a href="{% url 'create_item' %}" class="btn btn-outline-sucess me-2">Ajouter un nouvel élément</a>
+          
+        </form>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2 class="mb-5 mt-2">Liste des éléments</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>
+                                {{ item.name }} 
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" href="{% url 'get_item' item.id %}">Voir</a> | <a class="btn btn-success" href="{% url 'update_item' item.id %}">Modifier</a> | <a class="btn btn-danger" href="{% url 'delete_item' item.id %}">Supprimer</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

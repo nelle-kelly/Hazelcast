@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    
+    <title>create item</title>
+</head>
+<body>
+    <div class="container ">
+        <h2 class="mb-5 mt-5">Créer un nouvel élément</h2>
+        
+        <div class="row bg-light">
+            <div class="col p-5">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="  ">
+                        <div class="">
+        
+                            <label for="name" class="form-label">Nom :</label>
+                            <input type="text" class="form-control mb-5" id="name" name="name" required>
+            
+                        </div>
+            
+                        <div>
+                            <label class="form-label" for="description">Description :</label>
+                            <textarea id="description" name="description" required></textarea><br><br>
+                        </div>
+            
+                        <button class="btn btn-success" type="submit">Créer</button>
+                        <a href="{% url 'index' %}" class="btn btn-outline-danger me-2">Annuler</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

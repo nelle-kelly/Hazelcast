@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "project-hazelcast"
+version = "0.1.0"
+description = "test with Hcast"
+authors = ["nelle-kelly"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.12.3"
+hazelcast-python-client = "^5.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
