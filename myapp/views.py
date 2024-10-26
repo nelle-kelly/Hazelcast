@@ -3,10 +3,13 @@ import time
 from django.http import JsonResponse
 from .models import Item
 import hazelcast
+from hazelcast_config import get_hazelcast_client
 
 # Creating the Hazelcast client and connecting to the Hazelcast server
-client = hazelcast.HazelcastClient(cluster_members=["127.0.0.1:5701"])  # Adjust the address if needed
-cache_map = client.get_map("item_cache") #Retrieve the Hazelcast map for caching
+client = get_hazelcast_client()  # Adjust the address if needed
+my_map = client.get_map("item_cache").blocking() #Retrieve the Hazelcast map for caching
+my_set = client.get_set("set_item_cache").blocking() #Retrieve the Hazelcast set for caching
+
 
 def index(request):
     # Retrieves all Item objects from the database
@@ -28,7 +31,7 @@ def create_item(request):
         item = Item.objects.create(name=name, description=description)
 
         # Stores the newly created item in Hazelcast cache
-        cache_map.put(str(item.id), {"name": item.name, "description": item.description})
+        my_set.add(str(item.id), {"name": item.name, "description": item.description})
 
        # Redirects to the main page
         return redirect('index')
@@ -38,7 +41,17 @@ def create_item(request):
 # READ---------------------------Read operation ----------------------------------------------
 def get_item(request, item_id):
     # Checks if the item is already in the Hazelcast cache
-    cached_item = cache_map.get(str(item_id)).result()
+    cached_item = my_map.get(str(item_id))
+
+    """for cached_item in my_set:
+        if cached_item["id"] == str(item_id):
+            print("Données récupérées du set Hazelcast")
+            return JsonResponse(cached_item)
+            
+            
+            if my_queue.size() > 0:
+        cached_item = my_queue.take()
+            """
     
     if cached_item:
         # If the item is found in cache, return it directly
@@ -49,7 +62,7 @@ def get_item(request, item_id):
     item = get_object_or_404(Item, id=item_id)
 
     # Store the retrieved item in the cache for future requests
-    cache_map.put(str(item.id), {"name": item.name, "description": item.description})
+    my_map.put(str(item.id), {"name": item.name, "description": item.description})
     print("Données récupérées de la base de données et mises en cache")
     
     return JsonResponse({"name": item.name, "description": item.description})
@@ -66,7 +79,7 @@ def update_item(request, item_id):
         item.save()
 
         # Updates the item data with new values
-        cache_map.put(str(item.id), {"name": item.name, "description": item.description})
+        my_map.put(str(item.id), {"name": item.name, "description": item.description})
 
         return redirect('index')
 
@@ -81,7 +94,7 @@ def delete_item(request, item_id):
         item.delete()
 
         # Also removes the item from Hazelcast cache
-        cache_map.remove(str(item.id))
+        my_map.remove(str(item.id))
 
         return redirect('index')
 

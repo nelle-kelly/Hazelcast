@@ -128,8 +128,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CACHES = {
     'default': {
-        'BACKEND': 'myapp.hazelcast_cache.HazelcastCache',  # Utilise le chemin correct vers ton module HazelcastCache/ 'myapp.hazelcast_cache.HazelcastCache'
-        'LOCATION': '127.0.0.1:5701',
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # Utilise le chemin correct vers ton module HazelcastCache/ 'myapp.hazelcast_cache.HazelcastCache'
+        'LOCATION': 'unique-snowflake',
     }
 }
 #'django.core.cache.backends.locmem.LocMemCache' 'unique-snowflake'
