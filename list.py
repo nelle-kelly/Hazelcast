@@ -1,6 +1,6 @@
 from hazelcast_config import get_hazelcast_client
 
-class ListExample:
+class Structure_List:
 
     def __init__(self):
         self.client = get_hazelcast_client()
