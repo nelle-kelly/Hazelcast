@@ -16,10 +16,6 @@ def index(request):
     items = Item.objects.all()
     return render(request, 'index.html', {'items': items})
 
-
-def calculator(request):
-   return render(request, 'calculator.html')
-
 #-----------------------Creation operation-----------------------
 def create_item(request):
     #Retrieves data from the submitted form
@@ -31,7 +27,9 @@ def create_item(request):
         item = Item.objects.create(name=name, description=description)
 
         # Stores the newly created item in Hazelcast cache
-        my_set.add(str(item.id), {"name": item.name, "description": item.description})
+        my_map.put(str(item.id), {"name": item.name, "description": item.description}) # possible de remplacer set()
+
+        # my_set.add(str(item.id), {"name": item.name, "description": item.description}) # saving with struture set()
 
        # Redirects to the main page
         return redirect('index')
